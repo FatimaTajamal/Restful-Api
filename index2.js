@@ -1,98 +1,28 @@
-const express = require('express')
-const app = express()
-app.use(express.json())
+const express = require('express');
+const app = express();
+app.use(express.json());
+const mongoose = require('mongoose');
+const { createEmployee, getAllEmployees, deleteEmployee, updateEmployee } = require('./employeeOperations');
 
-const employees = {
-    1: {
-      id: 1,
-      name: "John Doe",
-      position: "Software Engineer",
-      department: "Engineering",
-    },
-    2: {
-      id: 2,
-      name: "Jane Smith",
-      position: "Data Analyst",
-      department: "Analytics",
-    },
-    3: {
-      id: 3,
-      name: "Mike Johnson",
-      position: "UX Designer",
-      department: "Design",
-    },
-    4: {
-      id: 4,
-      name: "Emily Davis",
-      position: "Marketing Specialist",
-      department: "Marketing",
-    },
-    5: {
-      id: 5,
-      name: "Alex Turner",
-      position: "Network Administrator",
-      department: "IT",
-    },
-    6: {
-      id: 6,
-      name: "Sara White",
-      position: "Financial Analyst",
-      department: "Finance",
-    },
-    7: {
-      id: 7,
-      name: "Daniel Brown",
-      position: "HR Manager",
-      department: "Human Resources",
-    }
-  };
+mongoose
+  .connect('mongodb://localhost:27017/Staff')
+  .then(async () => {
+    console.log('Connected to Mongoose');
 
-app.get('/', function (req, res) {
-  res.send('Hello World')
-})
+    let Employee = await createEmployee(2, 'Jane Smith ', 'Data Analyst', 'Analytics');
+    console.log(Employee);
 
-app.get("/api/employees",function(req,res){
-    res.send(employees);
+    let allEmployees = await getAllEmployees();
+    console.log(allEmployees);
 
-});
+   console.log(await deleteEmployee('656f4c7101a127670ff7879b'));
 
-app.get("/api/employees/:id", function (req, res) {
-    const employee = employees[req.params.id];
-    if (!employee) return res.status(400).send("Employee not found");
-    res.send(employee);
+    let updatedEmployee = await updateEmployee("656f4c7101a127670ff7879b", "Mike Johnson", "UX Designer", "Design");
+    console.log(updatedEmployee);
+  })
+  .catch((err) => {
+    console.log('Error detected');
+    console.log(err);
   });
 
-  
-  app.put("/api/employees/:id", function (req, res) {
-    const employee = employees[req.params.id];
-
-    employee.name = req.body.name;
-    employee.position = req.body.position;
-    employee.department = req.body.department;
-  
-    res.send(employee);
-  });
-
-  app.delete("/api/employees/:id", function (req, res) {
-    if (!employees[req.params.id]) return res.status(400).send("Employee not found");
-    delete employees[req.params.id];
-    res.send(Object.values(employees));
-  });
-  
-
-  app.post("/api/employees", function (req, res) {
-    const newEmployeeId = Object.keys(employees).length + 1;
-  
-    const newEmployee = {
-      id: newEmployeeId,
-      name: req.body.name,
-      position: req.body.position,
-      department: req.body.department,
-    };
-    
-    employees[newEmployeeId] = newEmployee;
-  
-    res.send(employees);
-  });
-
-app.listen(3000)
+app.listen(3000);
