@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="Style.css">
 </head>
 <body>
-    <script src="index.js"></script>
-</body>
-</html>
+
+    <h1>Employee Management</h1>
+
+    <h2>Add Employee</h2>
+    <form id="addEmployeeForm">
+        <label for="addName">Name:</label>
+        <input type="text" id="addName" required>
+        <br>
+        <label for="addPosition">Position:</label>
+        <input type="text" id="addPosition" required>
+        <br>
+        <label for="addDepartment">Department:</label>
+        <input type="text" id="addDepartment" required>
+        <br>
+        <button type="button" onclick="addEmployee()">Add Employee</button>
+    </form>
+
+    <h2>Update Employee</h2>
+    <form id="updateEmployeeForm">
+        <label for="updateId">Employee ID:</label>
+        <input type="text" id="updateId" required>
+        <br>
+        <label for="updateName">Name:</label>
+        <input type="text" id="updateName" required>
+        <br>
+        <label for="updatePosition">Position:</label>
+        <input type="text" id="updatePosition" required>
+        <br>
+        <label for="updateDepartment">Department:</label>
+        <input type="text" id="updateDepartment" required>
+        <br>
+        <button type="button" onclick="updateEmployee()">Update Employee</button>
+    </form>
+
+    <h2>Delete Employee</h2>
+    <form id="deleteEmployeeForm">
+        <label for="deleteId">Employee ID:</label>
+        <input type="text" id="deleteId" required>
+        <br>
+        <button type="button" onclick="deleteEmployee()">Delete Employee</button>
+    </form>
+
+    <h2>Get Employee</h2>
+    <form id="getEmployeeForm">
+        <label for="getEmployeeId">Employee ID:</label>
+        <input type="text" id="getEmployeeId" required>
+        <br>
+        <button type="button" onclick="getEmployee()">Get Employee</button>
+        <div id="employeeDetails"></div>
+    </form>
+    <script src="index1.js"></script>
+  </body>
+  </html>
